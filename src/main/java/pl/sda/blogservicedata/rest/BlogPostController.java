@@ -22,11 +22,14 @@ public class BlogPostController {
     }
 
     @GetMapping(path = "/blogPosts", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<List<BlogPost>> findByTopic(final @RequestParam(required = false) Topic topic) {
-        if (null != topic) {
-            return ResponseEntity.ok(blogPostService.findByTopic(topic));
+    public ResponseEntity<List<BlogPost>> findByTopic(final @RequestParam(required = false) Topic topic,
+                                                      @RequestParam(required = false) String author,
+                                                      @RequestParam(required = false) String titlePhrase) {
+        if (topic == null && author == null && titlePhrase == null) {
+            return ResponseEntity.ok(blogPostService.findAll());
+
         }
-        return ResponseEntity.ok(blogPostService.findAll());
+        return ResponseEntity.ok(blogPostService.findByCriteria(topic, author, titlePhrase));
     }
 
     @GetMapping(path = "/blogPosts/{blogPostId}", produces = {MediaType.APPLICATION_JSON_VALUE,
@@ -47,4 +50,8 @@ public class BlogPostController {
         return ResponseEntity.ok(blogPostService.save(blogPostDto));
     }
 
+    @PutMapping(path = "/blogPosts/{blogPostId}")
+    public ResponseEntity<BlogPost> updateBlogPost(@Valid @RequestBody BlogPostDto blogPostDto, @PathVariable long blogPostId) {
+        return ResponseEntity.ok(blogPostService.updateBlogPost(blogPostDto, blogPostId));
+    }
 }
