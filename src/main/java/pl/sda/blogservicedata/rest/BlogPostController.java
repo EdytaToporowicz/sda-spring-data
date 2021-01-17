@@ -4,6 +4,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.sda.blogservicedata.model.BlogPost;
+import pl.sda.blogservicedata.model.Topic;
 import pl.sda.blogservicedata.model.request.BlogPostDto;
 import pl.sda.blogservicedata.service.BlogPostService;
 
@@ -21,7 +22,7 @@ public class BlogPostController {
     }
 
     @GetMapping(path = "/blogPosts", produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
-    public ResponseEntity<List<BlogPost>> findByTopic(final @RequestParam(required = false) String topic) {
+    public ResponseEntity<List<BlogPost>> findByTopic(final @RequestParam(required = false) Topic topic) {
         if (null != topic) {
             return ResponseEntity.ok(blogPostService.findByTopic(topic));
         }

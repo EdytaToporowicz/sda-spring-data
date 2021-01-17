@@ -12,6 +12,7 @@ public class BlogPostMapper {
         blogPost.setTitle(blogPostDto.getTitle());
         blogPost.setContent(blogPostDto.getContent());
         blogPost.setTopic(blogPostDto.getTopic());
+        blogPost.setAuthor(blogPostDto.getAuthor());
         return blogPost;
     }
 }

@@ -11,9 +11,8 @@ import javax.validation.constraints.*;
 @AllArgsConstructor
 public class BlogPostDto {
 
-    @Max(99999)
-    @Min(1)
-    private long authorId;
+
+    private String author;
     @NotNull
     @Size(min = 5, max = 50)
     @Pattern(regexp = "^\\p{javaUpperCase}.*", message = "Tytuł musi zaczynać się wielką literą")

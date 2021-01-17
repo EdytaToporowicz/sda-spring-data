@@ -5,6 +5,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import pl.sda.blogservicedata.model.BlogPost;
+import pl.sda.blogservicedata.model.Topic;
 import pl.sda.blogservicedata.model.mapping.BlogPostMapper;
 import pl.sda.blogservicedata.model.request.BlogPostDto;
 import pl.sda.blogservicedata.repository.BlogPostRepository;
@@ -38,12 +39,12 @@ public class BlogPostService {
         return blogPostRepository.findById(id);
     }
 
-    public List<BlogPost> findByTopic(final String topic) {
+    public List<BlogPost> findByTopic(final Topic topic) {
         return blogPostRepository.findByTopic(topic);
     }
 
     public void removeById(final long id) {
-        blogPostRepository.remove(blogPostRepository.findById(id));
+        blogPostRepository.remove(id);
     }
 
 }
