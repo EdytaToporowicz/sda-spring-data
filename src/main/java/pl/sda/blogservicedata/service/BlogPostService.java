@@ -1,9 +1,8 @@
 package pl.sda.blogservicedata.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import pl.sda.blogservicedata.exception.BlogPostNotFoundException;
 import pl.sda.blogservicedata.model.BlogPost;
 import pl.sda.blogservicedata.model.Topic;
 import pl.sda.blogservicedata.model.mapping.BlogPostMapper;
@@ -14,7 +13,7 @@ import java.util.List;
 
 
 @Component
-@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
+//@Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class BlogPostService {
 
     private final BlogPostRepository blogPostRepository;
@@ -36,15 +35,15 @@ public class BlogPostService {
     }
 
     public BlogPost findById(final long id) {
-        return blogPostRepository.findById(id);
+        return blogPostRepository.findById(id).orElseThrow(() -> new BlogPostNotFoundException("blogpost not found"));
     }
 
     public List<BlogPost> findByTopic(final Topic topic) {
-        return blogPostRepository.findByTopic(topic);
+        return blogPostRepository.findAllByTopic(topic);
     }
 
     public void removeById(final long id) {
-        blogPostRepository.remove(id);
+        blogPostRepository.deleteById(id);
     }
 
 }
