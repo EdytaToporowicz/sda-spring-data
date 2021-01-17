@@ -32,11 +32,13 @@ public class BlogPostController {
         return ResponseEntity.ok(blogPostService.findByCriteria(topic, author, titlePhrase));
     }
 
+
     @GetMapping(path = "/blogPosts/{blogPostId}", produces = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<BlogPost> findById(final @PathVariable long blogPostId) {
         return ResponseEntity.ok(blogPostService.findById(blogPostId));
     }
+
 
     @DeleteMapping("/blogPosts/{blogPostId}")
     public ResponseEntity deleteById(final @PathVariable long blogPostId) {
@@ -44,11 +46,13 @@ public class BlogPostController {
         return ResponseEntity.noContent().build();
     }
 
+
     @PostMapping(path = "/blogPosts", consumes = {MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_XML_VALUE})
     public ResponseEntity<BlogPost> create(final @RequestBody @Valid BlogPostDto blogPostDto) {
         return ResponseEntity.ok(blogPostService.save(blogPostDto));
     }
+
 
     @PutMapping(path = "/blogPosts/{blogPostId}")
     public ResponseEntity<BlogPost> updateBlogPost(@Valid @RequestBody BlogPostDto blogPostDto, @PathVariable long blogPostId) {

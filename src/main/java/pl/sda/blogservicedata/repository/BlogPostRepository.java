@@ -1,17 +1,14 @@
 package pl.sda.blogservicedata.repository;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.sda.blogservicedata.model.BlogPost;
-import pl.sda.blogservicedata.model.Topic;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface BlogPostRepository extends CrudRepository<BlogPost, Long> { //Long - a nie prosty!
+public interface BlogPostRepository extends JpaRepository<BlogPost, Long> { //Long - a nie prosty! //wcześniej CrudRepository
 
     // private EntityManager entityManager;               //żeby podpiąć BD
 
@@ -47,8 +44,8 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Long> { //L
 //                .setParameter("id", blogPostId)
 //                .getSingleResult();
 //    }
-
-    List<BlogPost> findAllByTopic(Topic topic);
+//find by example - na koniec usunięte
+//    List<BlogPost> findAllByTopic(Topic topic);
 
     //    public List<BlogPost> findByTopic(Topic topic) {
 //        return entityManager.createQuery("select b from blog_posts b where b.topic=:topic", BlogPost.class)
@@ -56,18 +53,20 @@ public interface BlogPostRepository extends CrudRepository<BlogPost, Long> { //L
 //                .getResultList();
 //
 //    }
-    List<BlogPost> findAllByAuthor(String author);
 
-    List<BlogPost> findAllByTitleContaining(String title);
-
-    List<BlogPost> findAllByTopicAndAuthor(Topic topic, String author);
-
-    List<BlogPost> findAllByTopicAndTitleContaining(Topic topic, String title);
-
-    List<BlogPost> findAllByTitleContainingAndAuthor(String title, String author);
-
-    @Query("SELECT b FROM blog_posts b WHERE b.topic = :topic AND b.author = :author AND b.title LIKE %:title%")
-    List<BlogPost> findByAllCriteria(@Param("topic") Topic topic, String author, String title);
+    //find by example - na koniec usunięte
+//    List<BlogPost> findAllByAuthor(String author);
+//
+//    List<BlogPost> findAllByTitleContaining(String title);
+//
+//    List<BlogPost> findAllByTopicAndAuthor(Topic topic, String author);
+//
+//    List<BlogPost> findAllByTopicAndTitleContaining(Topic topic, String title);
+//
+//    List<BlogPost> findAllByTitleContainingAndAuthor(String title, String author);
+//
+//    @Query("SELECT b FROM blog_posts b WHERE b.topic = :topic AND b.author = :author AND b.title LIKE %:title%")
+//    List<BlogPost> findByAllCriteria(@Param("topic") Topic topic, String author, String title);
 
     List<BlogPost> findAll();
 }

@@ -1,6 +1,8 @@
 package pl.sda.blogservicedata.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Component;
 import pl.sda.blogservicedata.exception.BlogPostNotFoundException;
 import pl.sda.blogservicedata.model.BlogPost;
@@ -41,28 +43,38 @@ public class BlogPostService {
     }
 
     public List<BlogPost> findByCriteria(final Topic topic, String author, String titlePhrase) {        //sprawdz
-        if (topic != null && author != null && titlePhrase != null) {
-            return blogPostRepository.findByAllCriteria(topic, author, titlePhrase);
-        }
-        if (topic != null && author != null) {
-            return blogPostRepository.findAllByTopicAndAuthor(topic, author);
-        }
-        if (topic != null && titlePhrase != null) {
-            return blogPostRepository.findAllByTopicAndTitleContaining(topic, titlePhrase);
-        }
-        if (titlePhrase != null && author != null) {
-            return blogPostRepository.findAllByTitleContainingAndAuthor(titlePhrase, author);
-        }
-        if (titlePhrase != null) {
-            return blogPostRepository.findAllByTitleContaining(titlePhrase);
-        }
-        if (author != null) {
-            return blogPostRepository.findAllByAuthor(author);
-        }
-        if (topic != null) {
-            return blogPostRepository.findAllByTopic(topic);
-        }
-        return blogPostRepository.findAllByTopic(topic);
+        ExampleMatcher matcher = ExampleMatcher.matchingAll()                           //temat dodatkowy - query by example
+                .withMatcher("topic", ExampleMatcher.GenericPropertyMatchers.exact())
+                .withMatcher("author", ExampleMatcher.GenericPropertyMatchers.exact())
+                .withMatcher("title", ExampleMatcher.GenericPropertyMatchers.contains()) //w tytule się zawiera
+                .withIgnorePaths("id", "content", "created", "modified");
+        Example<BlogPost> example = Example.of(new BlogPost(0l, author, titlePhrase, null, topic, null), matcher);
+
+        return blogPostRepository.findAll(example);
+
+
+//        if (topic != null && author != null && titlePhrase != null) {
+//            return blogPostRepository.findByAllCriteria(topic, author, titlePhrase);
+//        }
+//        if (topic != null && author != null) {
+//            return blogPostRepository.findAllByTopicAndAuthor(topic, author);
+//        }
+//        if (topic != null && titlePhrase != null) {
+//            return blogPostRepository.findAllByTopicAndTitleContaining(topic, titlePhrase);
+//        }
+//        if (titlePhrase != null && author != null) {
+//            return blogPostRepository.findAllByTitleContainingAndAuthor(titlePhrase, author);
+//        }
+//        if (titlePhrase != null) {
+//            return blogPostRepository.findAllByTitleContaining(titlePhrase);
+//        }
+//        if (author != null) {
+//            return blogPostRepository.findAllByAuthor(author);
+//        }
+//        if (topic != null) {
+//            return blogPostRepository.findAllByTopic(topic);
+//        }
+//        return blogPostRepository.findAllByTopic(topic);
     }
 
     public void removeById(final long id) {
