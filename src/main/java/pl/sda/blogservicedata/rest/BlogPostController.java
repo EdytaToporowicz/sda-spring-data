@@ -1,5 +1,6 @@
 package pl.sda.blogservicedata.rest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ public class BlogPostController {
 
     private final BlogPostService blogPostService;
 
+    @Autowired
     public BlogPostController(BlogPostService blogPostService) {
         this.blogPostService = blogPostService;
     }
