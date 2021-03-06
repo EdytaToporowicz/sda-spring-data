@@ -7,6 +7,7 @@ import pl.sda.blogservicedata.model.BlogPost;
 import java.util.List;
 import java.util.Optional;
 
+
 @Repository
 public interface BlogPostRepository extends JpaRepository<BlogPost, Long> { //Long - a nie prosty! //wcześniej CrudRepository
 

@@ -2,12 +2,14 @@ package pl.sda.blogservicedata.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import pl.sda.blogservicedata.model.Topic;
 
 import javax.validation.constraints.*;
 
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class BlogPostDto {
 
